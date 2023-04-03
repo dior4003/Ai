@@ -1,164 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
-		<style>
-			body {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100vh;
-			}
-			.box {
-				width: 300px;
-				height: 500px;
-				display: flex;
-				border: 1px solid black;
-				flex-direction: column;
-			}
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body,
+      html {
+        height: 100%;
+        background-repeat: no-repeat; /*background-image: linear-gradient(rgb(12, 97, 33),rgb(104, 145, 162));*/
+        background: black;
+        position: relative;
+      }
+      #login-box {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        margin: 0 auto;
+        border: 1px solid black;
+        background: rgba(48, 46, 45, 1);
+        min-height: 250px;
+        padding: 20px;
+        z-index: 9999;
+      }
+      #login-box .logo .logo-caption {
+        font-family: "Poiret One", cursive;
+        color: white;
+        text-align: center;
+        margin-bottom: 0px;
+      }
+      #login-box .logo .tweak {
+        color: #b1c900;
+      }
+      #login-box .controls {
+        padding-top: 30px;
+      }
+      #login-box .controls input {
+        border-radius: 0px;
+        background: rgb(98, 96, 96);
+        border: 0px;
+        color: white;
+      }
+      #login-box .controls input:focus {
+        box-shadow: none;
+      }
+      #login-box .controls input:first-child {
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+      }
+      #login-box .controls input:last-child {
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+      }
+      #login-box button.btn-custom {
+        border-radius: 2px;
+        margin-top: 8px;
+        background: #b1c900;
+        border-color: rgba(48, 46, 45, 1);
+        color: white;
+      }
+      #login-box button.btn-custom:hover {
+        -webkit-transition: all 500ms ease;
+        -moz-transition: all 500ms ease;
+        -ms-transition: all 500ms ease;
+        -o-transition: all 500ms ease;
+        transition: all 500ms ease;
+        background: rgba(48, 46, 45, 1);
+        border-color: #b1c900;
+      }
+      #particles-js {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: 50% 50%;
+        position: fixed;
+        top: 0px;
+        z-index: 1;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .box {
+        width: 100%;
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
 
-			.title {
-				text-align: center;
-			}
+      .title {
+        text-align: center;
+        color: #fff;
+      }
 
-			.speakButton {
-				margin-top: auto;
-				padding: 20px;
-			}
+      .speakButton {
+        margin-top: auto;
+        padding: 20px;
+        position: absolute;
+        bottom: 0;
+        left: 25%;
+        width: 50%;
+        filter: blur(0px);
+      }
 
-			.messages-list {
-				list-style-type: none;
-				padding: 0;
-				margin: 0;
-			}
+      .messages-list {
+        list-style-type: none;
+        padding: 20px;
+        margin-bottom: 60px;
+        overflow-y: scroll;
+      }
 
-			.message-item {
-				padding: 10px;
-				font-weight: 700;
-			}
+      .message-item {
+        padding: 10px;
+        font-weight: 700;
+      }
+      .messages-list::-webkit-scrollbar {
+        width: 2px;
+      }
 
-			.right {
-				text-align: right;
-				background-color: darkcyan;
-			}
+      /* Track */
+      .messages-list::-webkit-scrollbar-track {
+        background: transparent;
+      }
 
-			.left {
-				background-color: antiquewhite;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="box">
-			<h2 class="title">Yunus Ai</h2>
+      /* Handle */
+      .messages-list::-webkit-scrollbar-thumb {
+        background: transparent;
+      }
 
-			<ul class="messages-list"></ul>
+      /* Handle on hover */
+      .messages-list::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+      .right {
+        text-align: right;
+        background-color: darkcyan;
+        padding: 10px;
+        border-radius: 3px;
+        margin: 5px 0;
+        width: fit-content;
+        margin-left: auto;
+        position: relative;
+      }
+      .right::before {
+        content: "";
+        width: 18px;
+        height: 14px;
+        position: absolute;
+        right: -6px;
+        background-color: darkcyan;
+        bottom: 4px;
+        transform: rotate(45deg);
+        z-index: -3;
+      }
+      .left::before {
+        content: "";
+        width: 18px;
+        height: 14px;
+        position: absolute;
+        left: -6px;
+        background-color: #fff;
+        bottom: 4px;
+        transform: rotate(45deg);
+        z-index: -3;
+      }
+      .left {
+        padding: 10px;
+        color: #000;
+        background: #fff;
+        border-radius: 3px;
+        margin: 5px 0;
+        width: fit-content;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="login-box">
+        <div class="box">
+          <h2 class="title">Suxbatdosh</h2>
 
-			<button class="speakButton">Gapirishni boshlash</button>
-		</div>
+          <ul class="messages-list"></ul>
+          <div class="alan-btn"></div>
+          <button class="speakButton btn btn-default btn-block btn-custom">
+            Gapirishni boshlash
+          </button>
+        </div>
+      </div>
+    </div>
 
-		<script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+    <div id="particles-js"></div>
+    <!-- partial -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+      $.getScript(
+        "https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js",
+        function () {
+          particlesJS("particles-js", {
+            particles: {
+              number: {
+                value: 100,
+                density: {
+                  enable: true,
+                  value_area: 500,
+                },
+              },
+              color: {
+                value: "#b1c900",
+              },
+              shape: {
+                type: "circle",
+                stroke: {
+                  width: 0,
+                  color: "#000000",
+                },
+                polygon: {
+                  nb_sides: 5,
+                },
+                image: {
+                  width: 100,
+                  height: 100,
+                },
+              },
+              opacity: {
+                value: 0.5,
+                random: false,
+                anim: {
+                  enable: false,
+                  speed: 1,
+                  opacity_min: 0.1,
+                  sync: false,
+                },
+              },
+              size: {
+                value: 5,
+                random: true,
+                anim: {
+                  enable: false,
+                  speed: 40,
+                  size_min: 0.1,
+                  sync: false,
+                },
+              },
+              line_linked: {
+                enable: true,
+                distance: 150,
+                color: "#ffffff",
+                opacity: 0.4,
+                width: 1,
+              },
+              move: {
+                enable: true,
+                speed: 6,
+                direction: "none",
+                random: false,
+                straight: false,
+                out_mode: "out",
+                attract: {
+                  enable: false,
+                  rotateX: 600,
+                  rotateY: 1200,
+                },
+              },
+            },
+            interactivity: {
+              detect_on: "canvas",
+              events: {
+                onhover: {
+                  enable: true,
+                  mode: "repulse",
+                },
+                onclick: {
+                  enable: true,
+                  mode: "push",
+                },
+                resize: true,
+              },
+              modes: {
+                grab: {
+                  distance: 400,
+                  line_linked: {
+                    opacity: 1,
+                  },
+                },
+                bubble: {
+                  distance: 400,
+                  size: 40,
+                  duration: 2,
+                  opacity: 8,
+                  speed: 3,
+                },
+                repulse: {
+                  distance: 100,
+                },
+                push: {
+                  particles_nb: 4,
+                },
+                remove: {
+                  particles_nb: 2,
+                },
+              },
+            },
+            retina_detect: true,
+            config_demo: {
+              hide_card: false,
+              background_color: "#b61924",
+              background_image: "",
+              background_position: "50% 50%",
+              background_repeat: "no-repeat",
+              background_size: "cover",
+            },
+          });
+        }
+      );
+    </script>
+    <script
+      type="text/javascript"
+      src="https://studio.alan.app/web/lib/alan_lib.min.js"
+    ></script>
+    <script>
+      var alanBtnInstance = alanBtn({
+        key: "c7aeff22f31077228fcf6b01f3138fd72e956eca572e1d8b807a3e2338fdd0dc/stage",
+        onCommand: function (commandData) {
+          console.log(commandData);
+          if (commandData.command === "go:back") {
+            //call client code that will react on the received command
+          }
+        },
+        rootEl: document.getElementById("alan-btn"),
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
 
-		<script>
-			const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
-				"7d235c3db99544cf905b806077711062",
-				"eastus"
-			);
+    <script>
+      const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
+        "e271992667cb457f999b49071377e8c9",
+        "eastus"
+      );
 
-			speechConfig.speechRecognitionLanguage = "uz-UZ";
-			speechConfig.speechSynthesisVoiceName = "uz-UZ-MadinaNeural";
+      speechConfig.speechRecognitionLanguage = "uz-UZ";
+      speechConfig.speechSynthesisVoiceName = "uz-UZ-SardorNeural";
 
-			const messages = [];
+      const messages = [];
 
-			const ulElement = document.querySelector(".messages-list");
-			const speakButton = document.querySelector(".speakButton");
-			let currentMessageElement;
-			let isMicrophoneEnabled = false;
+      const ulElement = document.querySelector(".messages-list");
+      const speakButton = document.querySelector(".speakButton");
+      let currentMessageElement;
+      let isMicrophoneEnabled = false;
 
-			// {
-			//     text: String;
-			//     url: String;
-			//     is: User/Bot;
-			// }
+      // {
+      //     text: String;
+      //     url: String;
+      //     is: User/Bot;
+      // }
 
-			const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig);
-			const speaker = new SpeechSDK.SpeechSynthesizer(speechConfig);
+      const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig);
+      const speaker = new SpeechSDK.SpeechSynthesizer(speechConfig);
 
-			recognizer.recognizing = (s, e) => {
-				speakButton.textContent = e.result.text;
-				console.log(`RECOGNIZING: Text=${e.result.text}`);
-			};
+      recognizer.recognizing = (s, e) => {
+        speakButton.textContent = e.result.text;
+        console.log(`RECOGNIZING: Text=${e.result.text}`);
+      };
 
-			recognizer.recognized = (s, e) => {
-				if (e.result.reason !== SpeechSDK.ResultReason.RecognizedSpeech)
-					return;
-				speakButton.textContent = "Gapirishni boshlash";
-				if (
-					messages.filter((i) => i.text === e.result.text).length == 0
-				)
-					addNewMessage(e.result.text);
-				recognizer.stopContinuousRecognitionAsync();
-				getResponse(e.result.text);
-			};
+      recognizer.recognized = (s, e) => {
+        if (e.result.reason !== SpeechSDK.ResultReason.RecognizedSpeech) return;
+        speakButton.textContent = "Gapirishni boshlash";
+        if (messages.filter((i) => i.text === e.result.text).length == 0)
+          addNewMessage(e.result.text);
+        recognizer.stopContinuousRecognitionAsync();
+        console.log(`RECOGNIZING: Text=${e.result}`);
+        getResponse(e.result.text);
+      };
 
-			recognizer.canceled = (s, e) => {
-				console.log(`CANCELED: Reason=${e.reason}`);
-			};
+      recognizer.canceled = (s, e) => {
+        console.log(`CANCELED: Reason=${e.reason}`);
+      };
 
-			function addNewMessage(text) {
-				messages.push({
-					text,
-					url: null,
-					is: "user",
-				});
-				renderMessages();
-			}
+      function addNewMessage(text) {
+        messages.push({
+          text,
+          url: null,
+          is: "user",
+        });
+        renderMessages();
+      }
 
-			function renderMessages() {
-				ulElement.textContent = "";
-				messages.forEach((item, index) => {
-					const liElement = document.createElement("li");
-					liElement.classList.add(
-						item.is == "user" ? "right" : "left",
-						"message-list"
-					);
-					liElement.textContent = item.text;
-					ulElement.appendChild(liElement);
-				});
-			}
+      function renderMessages() {
+        ulElement.textContent = "";
+        messages.forEach((item, index) => {
+          const liElement = document.createElement("li");
+          liElement.classList.add(
+            item.is == "user" ? "right" : "left",
+            "message-list"
+          );
+          liElement.textContent = item.text;
+          ulElement.appendChild(liElement);
+        });
+      }
 
-			speakButton.addEventListener("click", (event) => {
-				if (isMicrophoneEnabled) {
-					recognizer.stopContinuousRecognitionAsync();
-				} else {
-					recognizer.startContinuousRecognitionAsync();
-				}
-				isMicrophoneEnabled = !isMicrophoneEnabled;
-			});
+      speakButton.addEventListener("click", (event) => {
+        if (isMicrophoneEnabled) {
+          recognizer.stopContinuousRecognitionAsync();
+        } else {
+          recognizer.startContinuousRecognitionAsync();
+        }
+        isMicrophoneEnabled = !isMicrophoneEnabled;
+      });
 
-			async function getResponse(text) {
-				fetch("http://localhost:3000/getResponse", {
-					method: "POST",
-					body: JSON.stringify({
-						question: text,
-					}),
-					headers: {
-						"Content-Type": "application/json",
-					},
-				})
-					.then((data) => data.json())
-					.then((data) => {
-						messages.push({
-							text: data.response,
-							url: null,
-							is: "bot",
-						});
-						speaker.speakTextAsync(data.response);
-						renderMessages();
-					});
-			}
-		</script>
-	</body>
+      async function getResponse(text) {
+        fetch("http://localhost:3000/getResponse", {
+          method: "POST",
+          body: JSON.stringify({
+            question: text,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((data) => data.json())
+          .then((data) => {
+            messages.push({
+              text: data.response,
+              url: null,
+              is: "bot",
+            });
+            speaker.speakTextAsync(data.response);
+            renderMessages();
+          });
+      }
+    </script>
+  </body>
 </html>

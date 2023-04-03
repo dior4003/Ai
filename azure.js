@@ -7,9 +7,9 @@
 	var audioFile = "YourAudioFile.wav";
 	// This example requires environment variables named "SPEECH_KEY" and "SPEECH_REGION"
 	const speechConfig = sdk.SpeechConfig.fromSubscription(
-		`AZURE_API`,
-		`eastus`
-	);
+    `e271992667cb457f999b49071377e8c9`,
+    `eastus`
+  );
 	const audioConfig = sdk.AudioConfig.fromDefaultSpeakerOutput(audioFile);
 
 	// The language of the voice that speaks.
